@@ -20,20 +20,6 @@ const Items = ({ setCartCount }) => {
     setCartCount(updatedCart.length);
   };
 
-  useEffect(() => {
-    const syncCart = (event) => {
-      if (event.key === "cart") {
-        setCart(JSON.parse(event.newValue) || []);
-        setCartCount(JSON.parse(event.newValue)?.length || 0);
-      }
-    };
-    window.addEventListener("storage", syncCart);
-
-    return () => {
-      window.removeEventListener("storage", syncCart);
-    };
-  }, [setCartCount]);
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Available Items</h1>

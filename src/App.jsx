@@ -4,7 +4,7 @@ import Home from "./screens/Home";
 import Items from "./screens/Items";
 import Checkout from "./screens/Checkout";
 import AddItem from "./screens/AddItem";
-import Navbar from "./components/Navbar"; // Import Navbar
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const [cartCount, setCartCount] = useState(0);
