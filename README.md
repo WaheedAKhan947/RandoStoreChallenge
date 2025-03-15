@@ -17,6 +17,7 @@ If you are developing a production application, we recommend using TypeScript an
 2) var cors = require("cors");
 
 3) in index.js 
+
 app.use(
   cors({
     origin: [
@@ -27,6 +28,8 @@ app.use(
     allowedHeaders: "Content-Type",
   })
 );
+
+## UI 
 
 ![4e377ba779514bfbb7c1ff19a995e7e2](https://github.com/user-attachments/assets/4725a457-c83c-4831-91ee-14e1b4fde400)
 ![4adb0d338b5144248713ad8f1286df93](https://github.com/user-attachments/assets/c41eee9d-50b7-4f02-b71c-78044bd2b0c8)
