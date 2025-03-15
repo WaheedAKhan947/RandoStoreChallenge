@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import config from "../../config";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Items = ({ setCartCount }) => {
   const [items, setItems] = useState([]);
@@ -18,10 +20,20 @@ const Items = ({ setCartCount }) => {
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     setCartCount(updatedCart.length);
+    toast.success(`${item.name} added to cart! 🛒`, {
+      position: "top-right",
+      autoClose: 2000, // Auto close after 2 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+    });
   };
 
   return (
     <div className="container mx-auto p-4">
+      <ToastContainer position="top-right" autoClose={3000} />
       <h1 className="text-2xl font-bold mb-4">Available Items</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {items.map((item) => (

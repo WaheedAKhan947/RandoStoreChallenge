@@ -1,20 +1,33 @@
 import { useState } from "react";
 import config from "../../config";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Checkout =({setCartCount}) => {
+const Checkout = ({ setCartCount }) => {
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart")) || []
   );
 
   const removeFromCart = (index) => {
+    const removedItem = cart[index];
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    setCartCount(updatedCart.length); 
+    setCartCount(updatedCart.length);
+    toast.info(`${removedItem.name} removed from cart!!`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+    });
   };
 
   return (
     <div className="container mx-auto p-4">
+      <ToastContainer position="top-right" autoClose={3000} />
       <h1 className="text-2xl font-bold mb-4">Checkout</h1>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
@@ -53,6 +66,6 @@ const Checkout =({setCartCount}) => {
       )}
     </div>
   );
-}
+};
 
 export default Checkout;
