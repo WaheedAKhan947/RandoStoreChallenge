@@ -10,30 +10,63 @@ const Items = ({ setCartCount }) => {
   );
 
   useEffect(() => {
-    fetch(`${config.baseUrl}/items`)
-      .then((res) => res.json())
-      .then((data) => setItems(data));
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(`${config.baseUrl}/items`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch items");
+        }
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        toast.error(`Error: ${error.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "light",
+        });
+      }
+    };
+
+    fetchItems();
   }, []);
 
   const addToCart = (item) => {
-    const updatedCart = [...cart, item];
-    setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    setCartCount(updatedCart.length);
-    toast.success(`${item.name} added to cart! 🛒`, {
-      position: "top-right",
-      autoClose: 2000, // Auto close after 2 seconds
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "light",
-    });
+    try {
+      const updatedCart = [...cart, item];
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setCartCount(updatedCart.length);
+
+      toast.success(`${item.name} added to cart! 🛒`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to add item to cart!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
+    }
   };
 
   return (
     <div className="container mx-auto p-4">
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer />
       <h1 className="text-2xl font-bold mb-4">Available Items</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {items.map((item) => (
